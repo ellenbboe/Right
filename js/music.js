@@ -41,15 +41,15 @@ var ac = new AudioContext(),
       'D3 e',
       'A1 e',
       'D3 e',
-        "D4 q",
+        "D4 e",
         "A4 e",
-        "D4 q",
         "D4 e",
-        "E4 q",
         "D4 e",
-        "E4 q",
+        "E4 e",
         "D4 e",
-        "F4 q",
+        "E4 e",
+        "D4 e",
+        "F4 e",
         "E4 e",
         "G4 e",
         "F4 e",
@@ -93,8 +93,8 @@ sequence2.staccato = 0.55;
 // adjust the levels
 sequence1.gain.gain.value = 0.05;
 sequence2.gain.gain.value = 0.03;
-wrong.gain.gain.value = 0.08;
-right.gain.gain.value = 0.08;
+wrong.gain.gain.value = 0.1;
+right.gain.gain.value = 0.1;
 
 /*
   Audio utilities
