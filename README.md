@@ -11,3 +11,8 @@ if right press right otherwies left
 ----------------------------------------
 希望你能获得乐趣
 I hope you can have fun.
+
+and 
+To upgrade the ability,i try to bulid the game
+in different platform: windows browser or eletron :)
+
