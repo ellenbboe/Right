@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>choose</title>
+
+    <style type="text/css">
+    html,body{
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+
+
+    div{
+      height: 50%;
+      text-align: center;
+    }
+
+    button{
+      position:relative;
+      font-size: 100px;
+      font-family: monospace;
+      width:50%;
+      height: 40%;
+      border-style: solid;
+      border-radius: 20px;
+      margin-top: 15%;
+    }
+    #keyboard{
+      background-image: url(./images/keyboard.jpg);
+      z-index: -1;
+    }
+
+
+    #phone{
+      background-image: url(./images/phone.jpg);
+      z-index: -1;
+    }
+
+
+    </style>
+  </head>
+
+  <body>
+      <div id="keyboard">
+        <button onclick="location='./keyboard.html'" id="a">使用键盘</button>
+      </div>
+      <div id="phone">
+        <button onclick="location='./phone.html'" id="b">不使用键盘</button>
+      </div>
+  </body>
+  <script>
+
+
+  </script>
+</html>
