@@ -1,4 +1,7 @@
 window.blur();
+var WINDOW_WIDTH = document.documentElement.clientWidth;
+var WINDOW_HEIGHT = document.documentElement.clientHeight;
+var balls = [];
 var start = false;//press r to start
 var issame = false;//signal the color of the word and background
 var luckcynumber1 = 0;//random number for color
@@ -44,6 +47,8 @@ function leftgo(){
   }else{
     wrongSound();
     score = 0;
+      alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+      restart();
   }
 }
 function rightgo(){
@@ -55,6 +60,8 @@ function rightgo(){
   }else{
     wrongSound();
     score = 0;
+      alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+      restart();
   }
 }
 
@@ -62,6 +69,12 @@ function startgo(){
     start = true;
     sequence1.stop();
     bgSound();
+}
+function restart(){
+    start = false;
+    sequence2.stop();
+    changecolor();
+    startSound();
 }
 // =============================================
 // start function
@@ -87,6 +100,8 @@ changecolor();//init random color;
 // =============================================
   var loop = kontra.gameLoop({
     update:function(){
+        background.color = 'black';
+      if(start){
       if(score > max){
         max = score;
       }
@@ -96,31 +111,36 @@ changecolor();//init random color;
         time = 2;
         score = 0;
         level = 1;
-        changecolor();
+        alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+        restart();
       }
 
-      if(score > 150){
+      if(score > 300){
         level = 2;
         background.color = colors[luckcynumber3];
-      }else if(score <= 150 && score >=0){
+      }else if(score <= 300 && score >=0){
         level = 1;
         background.color = 'black';
       }
+          balldown(15);
+    }
+
     },
     render:function(){
       background.render();
       if(start){
-        drawText(words[luckcynumber2],15,colors[luckcynumber1]);
-        drawscore("score:"+score+"  max:"+max+"  level:"+level,5,5,5);
+        drawText(words[luckcynumber2],30,colors[luckcynumber1]);
+        drawball(15);
+        drawscore("score:"+score+"  max:"+max+"  level:"+level,8,5,5);
         drawscore("time:"+time,5,5,kontra.canvas.height-30);
       }else{
-        drawscore("Judge the consistency of  ",5,20,50);
-        drawscore("word and its colors.right ",5,20,100);
-        drawscore("press Right otherwies Wrong.",5,20,150);
-        drawscore("if wrong or time up",5,20,200);
-        drawscore("then score = 0",5,20,250);
-        drawscore("be careful and go bravely!",5,20,300);
-        drawscore("Press Start to start!!!",7,20,500);
+          drawscore("Judge the consistency of  ",8,20,100);
+          drawscore("word and its colors.right ",8,20,200);
+          drawscore("press right otherwies left.",8,20,300);
+          drawscore("if wrong or time up",8,20,400);
+          drawscore("then score = 0",8,20,500);
+          drawscore("be careful and go bravely!",8,20,600);
+          drawscore("Press R to start!!!",10,20,800);
       }
 
     }
@@ -184,6 +204,15 @@ function drawText(string,size,color) {
                 for (var x = 0; x < row.length; x++) {
                     if (row[x]) {
                         kontra.context.fillRect(currX + x * size , currY , size, size);
+                        var newball={
+                            x:currX + x * size,
+                            y:currY,
+                            g:1.5 + (Math.random()),
+                            vx:Math.pow(-1, Math.floor(Math.random() * 100)) * 5,
+                            vy:-Math.ceil(Math.random() * 10),
+                            color:color
+                        };
+                        balls.push(newball);
                     }
                 }
                 addX = Math.max(addX, row.length * size);
@@ -191,6 +220,37 @@ function drawText(string,size,color) {
             }
             currX += size + addX;
           }
+    }
+}
+
+function drawball(size){
+    for(var i = 0;i < balls.length;i++){
+        kontra.context.fillStyle = balls[i].color;
+        kontra.context.fillRect(balls[i].x,balls[i].y,size,size);
+    }
+}
+
+function balldown(size){
+    //draw the word
+    for (var i = 0; i < balls.length; i++) {
+        balls[i].x += balls[i].vx;
+        balls[i].y += balls[i].vy;
+        balls[i].vy += balls[i].g;
+        if (balls[i].y > WINDOW_HEIGHT - size){
+            balls[i].y = WINDOW_HEIGHT - size;
+            balls[i].vy = -balls[i].vy * 0.6;
+        }
+    }
+    var ballscount = 0;
+
+    for (i = 0; i < balls.length; i++) {
+        if (balls[i].x + size > 0 && balls[i].x  < WINDOW_WIDTH) {
+            balls[ballscount++] = balls[i]
+        }
+    }
+
+    while (balls.length > Math.min(ballscount, 500)) {
+        balls.pop();
     }
 }
 function drawscore(string,size,a,b){

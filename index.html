@@ -9,47 +9,50 @@
       margin: 0;
       padding: 0;
       height: 100%;
+      background-color: black;
+        color: white;
+        text-align: center;
     }
 
-
-
-    div{
-      height: 50%;
-      text-align: center;
-    }
 
     button{
-      position:relative;
+        color: white;
+      display: inline-block;
       font-size: 100px;
       font-family: monospace;
-      width:50%;
-      height: 40%;
       border-style: solid;
+        border-width: thick;
+      border-color: white;
       border-radius: 20px;
       margin-top: 15%;
+        background-color: black;
     }
-    #keyboard{
-      background-image: url(./images/keyboard.jpg);
-      z-index: -1;
+    h1{
+        font-size: 150px;
     }
-
-
-    #phone{
-      background-image: url(./images/phone.jpg);
-      z-index: -1;
+    p{
+      font-size: 50px;
     }
 
+    #a{
+        float: left;
+        margin-left: 10%;
+        }
+    #b{
+        float: right;
+        margin-right: 10%;
+        }
 
     </style>
   </head>
 
   <body>
-      <div id="keyboard">
-        <button onclick="location='./keyboard.html'" id="a">使用键盘</button>
-      </div>
-      <div id="phone">
-        <button onclick="location='./phone.html'" id="b">不使用键盘</button>
-      </div>
+        <h1>RIGHT</h1>
+        <p>这是一个休闲游戏,你可以根据你的设备选择不同的方式进行游戏</p>
+        <p>点击下面按钮进入开始界面</p>
+        <button onclick="location='./keyboard.html'" id="a">PC</button>
+        <button onclick="location='./mobile.html'" id="b">mobile</button>
+
   </body>
   <script>
 

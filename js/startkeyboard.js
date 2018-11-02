@@ -1,5 +1,8 @@
 window.blur();
+var WINDOW_WIDTH = document.documentElement.clientWidth;
+var WINDOW_HEIGHT = document.documentElement.clientHeight;
 var start = false;//press r to start
+var balls = [];
 var issame = false;//signal the color of the word and background
 var luckcynumber1 = 0;//random number for color
 var luckcynumber2 = 0;//random number for words
@@ -31,6 +34,12 @@ words[6] = 'grey';
 
 changecolor();//init random color;
 
+function restart(){
+    start = false;
+    sequence2.stop();
+    changecolor();
+    startSound();
+}
 // =============================================
 // start function
 // =============================================
@@ -46,29 +55,38 @@ kontra.init();
     width: kontra.canvas.width,
     height: kontra.canvas.height,
   });
+
+
   var max = 0;//highscore
   var time = 2;//rest time to play
   var score = 0;
 
+
+
   document.onkeyup = function(e){
     if(start){
-      kontra.keys.unbind(['R','r']);
       if(kontra.keys.pressed('left') && !issame){//judge the color
+
         rightSound();
         changecolor();
         score +=10;
         time = 2;
       }else if (kontra.keys.pressed('right') && issame) {//judge the color
+
         rightSound();
         changecolor();
         score +=10;
         time = 2;
-      }else{
+      }else if(!kontra.keys.pressed('r')){
         wrongSound();
         score = 0;
+        alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+        restart();
       }
     }
   }
+
+
 
   kontra.keys.bind(['R','r'],function(){
     start = true;
@@ -81,40 +99,47 @@ kontra.init();
 // =============================================
   var loop = kontra.gameLoop({
     update:function(){
-      if(score > max){
-        max = score;
-      }
-      if(time>0){
-        time -=0.01;
-      }else{
-        time = 2;
-        score = 0;
-        level = 1;
-        changecolor();
-      }
+        if(start){
+            if(score > max){
+                max = score;
+            }
+            if(time>0){
+                time -=0.01;
+            }else{
+                time = 2;
+                score = 0;
+                level = 1;
+                alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+                restart();
+            }
 
-      if(score > 150){
-        level = 2;
-        background.color = colors[luckcynumber3];
-      }else if(score <= 150 && score >=0){
-        level = 1;
+            if(score > 300){
+                level = 2;
+                background.color = colors[luckcynumber3];
+            }else if(score <= 300 && score >=0){
+                level = 1;
+                background.color = 'black';
+            }
+            balldown(15);
+        }
         background.color = 'black';
-      }
+
     },
     render:function(){
       background.render();
       if(start){
-        drawText(words[luckcynumber2],15,colors[luckcynumber1]);
-        drawscore("score:"+score+"  max:"+max+"  level:"+level,5,5,5);
+        drawText(words[luckcynumber2],30,colors[luckcynumber1]);
+        drawball(15);
+        drawscore("score:"+score+"  max:"+max+"  level:"+level,10,5,5);
         drawscore("time:"+time,5,5,kontra.canvas.height-30);
       }else{
-        drawscore("Judge the consistency of  ",5,20,50);
-        drawscore("word and its colors.right ",5,20,100);
-        drawscore("press right otherwies left.",5,20,150);
-        drawscore("if wrong or time up",5,20,200);
-        drawscore("then score = 0",5,20,250);
-        drawscore("be careful and go bravely!",5,20,300);
-        drawscore("Press R to start!!!",7,20,500);
+        drawscore("Judge the consistency of  ",8,20,100);
+        drawscore("word and its colors.right ",8,20,200);
+        drawscore("press right otherwies left.",8,20,300);
+        drawscore("if wrong or time up",8,20,400);
+        drawscore("then score = 0",8,20,500);
+        drawscore("be careful and go bravely!",8,20,600);
+        drawscore("Press R to start!!!",10,20,800);
       }
 
     }
@@ -125,6 +150,8 @@ kontra.init();
 if(start == false){
   startSound();
 }
+
+
 
 // =============================================
 //  changecolor based on level
@@ -178,6 +205,15 @@ function drawText(string,size,color) {
                 for (var x = 0; x < row.length; x++) {
                     if (row[x]) {
                         kontra.context.fillRect(currX + x * size , currY , size, size);
+                        var newball={
+                            x:currX + x * size,
+                            y:currY,
+                            g:1.5 + (Math.random()),
+                            vx:Math.pow(-1, Math.floor(Math.random() * 100)) * 5,
+                            vy:-Math.ceil(Math.random() * 10),
+                            color:color
+                        };
+                        balls.push(newball);
                     }
                 }
                 addX = Math.max(addX, row.length * size);
@@ -187,6 +223,39 @@ function drawText(string,size,color) {
           }
     }
 }
+
+function drawball(size){
+
+    for(var i = 0;i < balls.length;i++){
+        kontra.context.fillStyle = balls[i].color;
+        kontra.context.fillRect(balls[i].x,balls[i].y,size,size);
+    }
+}
+
+function balldown(size){
+    //draw the word
+    for (var i = 0; i < balls.length; i++) {
+        balls[i].x += balls[i].vx;
+        balls[i].y += balls[i].vy;
+        balls[i].vy += balls[i].g;
+        if (balls[i].y > WINDOW_HEIGHT - size){
+            balls[i].y = WINDOW_HEIGHT - size;
+            balls[i].vy = -balls[i].vy * 0.6;
+        }
+    }
+    var ballscount = 0;
+
+    for (i = 0; i < balls.length; i++) {
+        if (balls[i].x + size > 0 && balls[i].x  < WINDOW_WIDTH) {
+            balls[ballscount++] = balls[i]
+        }
+    }
+
+    while (balls.length > Math.min(ballscount, 500)) {
+        balls.pop();
+    }
+}
+
 function drawscore(string,size,a,b){
   //var size = size;
   var needed = [];
