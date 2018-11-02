@@ -46,8 +46,8 @@ function leftgo(){
     time = 2;
   }else{
     wrongSound();
-    score = 0;
       alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+        score = 0;
       restart();
   }
 }
@@ -59,8 +59,8 @@ function rightgo(){
     time = 2;
   }else{
     wrongSound();
-    score = 0;
       alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+    score = 0;
       restart();
   }
 }
@@ -108,10 +108,11 @@ changecolor();//init random color;
       if(time>0){
         time -=0.01;
       }else{
+          alert("当前:"+score+", 总分: "+max+", 继续努力!!");
         time = 2;
         score = 0;
         level = 1;
-        alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+
         restart();
       }
 

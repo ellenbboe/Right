@@ -79,8 +79,9 @@ kontra.init();
         time = 2;
       }else if(!kontra.keys.pressed('r')){
         wrongSound();
+          alert("当前:"+score+", 总分: "+max+", 继续努力!!");
         score = 0;
-        alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+
         restart();
       }
     }
@@ -128,18 +129,18 @@ kontra.init();
     render:function(){
       background.render();
       if(start){
-        drawText(words[luckcynumber2],30,colors[luckcynumber1]);
+        drawText(words[luckcynumber2],20,colors[luckcynumber1]);
         drawball(15);
-        drawscore("score:"+score+"  max:"+max+"  level:"+level,10,5,5);
+        drawscore("score:"+score+"  max:"+max+"  level:"+level,8,5,5);
         drawscore("time:"+time,5,5,kontra.canvas.height-30);
       }else{
-        drawscore("Judge the consistency of  ",8,20,100);
-        drawscore("word and its colors.right ",8,20,200);
-        drawscore("press right otherwies left.",8,20,300);
-        drawscore("if wrong or time up",8,20,400);
-        drawscore("then score = 0",8,20,500);
-        drawscore("be careful and go bravely!",8,20,600);
-        drawscore("Press R to start!!!",10,20,800);
+        drawscore("Judge the consistency of  ",6,20,100);
+        drawscore("word and its colors.right ",6,20,200);
+        drawscore("press right otherwies left.",6,20,300);
+        drawscore("if wrong or time up",6,20,400);
+        drawscore("then score = 0",6,20,500);
+        drawscore("be careful and go bravely!",6,20,600);
+        drawscore("Press R to start!!!",8,20,800);
       }
 
     }
