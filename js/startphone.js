@@ -100,7 +100,6 @@ changecolor();//init random color;
 // =============================================
   var loop = kontra.gameLoop({
     update:function(){
-        background.color = 'black';
       if(start){
       if(score > max){
         max = score;
@@ -115,17 +114,15 @@ changecolor();//init random color;
 
         restart();
       }
-
-      if(score > 300){
-        level = 2;
-        background.color = colors[luckcynumber3];
-      }else if(score <= 300 && score >=0){
-        level = 1;
-        background.color = 'black';
-      }
           balldown(15);
     }
-
+        if(score > 300){
+            level = 2;
+            background.color = colors[luckcynumber3];
+        }else if(score <= 300 && score >=0){
+            level = 1;
+            background.color = 'black';
+        }
     },
     render:function(){
       background.render();

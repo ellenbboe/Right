@@ -114,16 +114,16 @@ kontra.init();
                 restart();
             }
 
-            if(score > 300){
-                level = 2;
-                background.color = colors[luckcynumber3];
-            }else if(score <= 300 && score >=0){
-                level = 1;
-                background.color = 'black';
-            }
+
             balldown(15);
         }
-        background.color = 'black';
+        if(score > 300){
+            level = 2;
+            background.color = colors[luckcynumber3];
+        }else if(score <= 300 && score >=0){
+            level = 1;
+            background.color = 'black';
+        }
 
     },
     render:function(){
@@ -134,13 +134,13 @@ kontra.init();
         drawscore("score:"+score+"  max:"+max+"  level:"+level,8,5,5);
         drawscore("time:"+time,5,5,kontra.canvas.height-30);
       }else{
-        drawscore("Judge the consistency of  ",6,20,100);
-        drawscore("word and its colors.right ",6,20,200);
-        drawscore("press right otherwies left.",6,20,300);
-        drawscore("if wrong or time up",6,20,400);
-        drawscore("then score = 0",6,20,500);
-        drawscore("be careful and go bravely!",6,20,600);
-        drawscore("Press R to start!!!",8,20,800);
+        drawscore("Judge the consistency of  ",6,20,70);
+        drawscore("word and its colors.right ",6,20,140);
+        drawscore("press right otherwies left.",6,20,210);
+        drawscore("if wrong or time up",6,20,280);
+        drawscore("then score = 0",6,20,350);
+        drawscore("be careful and go bravely!",6,20,420);
+        drawscore("Press R to start!!!",8,20,600);
       }
 
     }
