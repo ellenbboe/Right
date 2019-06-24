@@ -61,6 +61,7 @@ function rightgo(){
     wrongSound();
       alert("当前:"+score+", 总分: "+max+", 继续努力!!");
     score = 0;
+      time = 2;
       restart();
   }
 }
@@ -130,7 +131,7 @@ changecolor();//init random color;
         drawText(words[luckcynumber2],30,colors[luckcynumber1]);
         drawball(15);
         drawscore("score:"+score+"  max:"+max+"  level:"+level,8,5,5);
-        drawscore("time:"+time,5,5,kontra.canvas.height-30);
+        drawscore("time:"+timetime.toFixed(2),5,5,kontra.canvas.height-30);
       }else{
           drawscore("Judge the consistency of  ",8,20,100);
           drawscore("word and its colors.right ",8,20,200);

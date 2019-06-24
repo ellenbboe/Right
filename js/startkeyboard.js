@@ -79,9 +79,9 @@ kontra.init();
         time = 2;
       }else if(!kontra.keys.pressed('r')){
         wrongSound();
-          alert("当前:"+score+", 总分: "+max+", 继续努力!!");
+        alert("当前:"+score+", 总分: "+max+", 继续努力!!");
         score = 0;
-
+        time = 2;
         restart();
       }
     }
@@ -132,7 +132,7 @@ kontra.init();
         drawText(words[luckcynumber2],20,colors[luckcynumber1]);
         drawball(15);
         drawscore("score:"+score+"  max:"+max+"  level:"+level,8,5,5);
-        drawscore("time:"+time,5,5,kontra.canvas.height-30);
+        drawscore("time:"+time.toFixed(2),5,5,kontra.canvas.height-30);
       }else{
         drawscore("Judge the consistency of  ",6,20,70);
         drawscore("word and its colors.right ",6,20,140);
